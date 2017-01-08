@@ -1,2 +1,4 @@
 # ANNResearch
 Research Library to Investigate how Artificial Neural Nets Work, and Their Strengths and Limitations
+
+I've decided to revisit Artificial Neural Networks in the hopes they will be a valuable tool for my larger project of creating conversational AI to pass the Turing Test. The need for ANNs in conversational AI stems from the need to identify high level concepts in a sentence, for instance the subject of a sentence. Tools exist which accomplish this task, for instance Stanford CoreNLP (http://stanfordnlp.github.io/CoreNLP/), and I believe they use neural nets - at least the Stanford Lexical Parser does (http://nlp.stanford.edu/software/parser-faq.shtml#rnn). In any case, it seems to me an effective way to accomplish the task, but for my conversational AI I would need more control of the software, so I can customize it to find even higher level concepts, further from the level of pure grammar, such as parts of the sentence which evoke emotion. 
