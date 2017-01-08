@@ -8,3 +8,5 @@ Unsupervised ANNs may also prove incredibly useful, especially since creating la
 Another for the ANNResearch project is to understand how to make ANNs effective (high success rate) and efficient (in terms of runtime and memory). Since I'm building these from scratch, I have control of every component of the ANN, and can test every one individually to see what makes them tick. 
 
 And the final goal is to see what kinds of problems ANNs can and can't solve, and the training sizes required to be effective. 
+
+README in progress...
