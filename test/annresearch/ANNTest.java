@@ -162,4 +162,116 @@ public class ANNTest {
         System.out.println("lol");
         
     }
+    
+    /**
+     * Test trainOnBatchWeak method, of class ANN.
+     */
+    @Test
+    public void testTrainOnBatchWeak() {
+        System.out.println("* testTrainOnBatchWeak");
+        SimpleMatrix[] inputs = new SimpleMatrix[4];
+        inputs[0] = new SimpleMatrix(2, 1, true, 1, 1);
+        inputs[1] = new SimpleMatrix(2, 1, true, 0, 1);
+        inputs[2] = new SimpleMatrix(2, 1, true, 1, 0);
+        inputs[3] = new SimpleMatrix(2, 1, true, 0, 0);
+        SimpleMatrix[] desiredOutputs = new SimpleMatrix[4];
+        desiredOutputs[0] = new SimpleMatrix(1, 1, true, 1);
+        desiredOutputs[1] = new SimpleMatrix(1, 1, true, 0);
+        desiredOutputs[2] = new SimpleMatrix(1, 1, true, 0);
+        desiredOutputs[3] = new SimpleMatrix(1, 1, true, 0);
+        int[] layerSizes = {2, 1};
+        double[] biases = {0, 0};
+        System.out.println("biases initialized to " + biases[0] + ", " + biases[1]);
+        SimpleMatrix[] weights = new SimpleMatrix[1];
+        weights[0] = new SimpleMatrix(1, 2, true, 0, 0);
+        ANN instance = new ANN(layerSizes, weights, biases);
+        double error = 0;
+        double output;
+        for(int i = 0; i < inputs.length; i++) {
+            output = instance.runOnInput(inputs[i]).get(0);
+            error += Math.abs(output - desiredOutputs[i].get(0));
+        }
+        System.out.println("\tOutputs before weak batch training: ");
+        for(int i = 0; i < inputs.length; i++) {
+            System.out.println("\t\tFor input: " + inputs[i].get(0) + ", " + inputs[i].get(1));
+            System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
+        }
+        double newError = 0; 
+        int iterations = 10000;
+        instance.trainOnBatchWeak(inputs, desiredOutputs, iterations);
+        for(int i = 0; i < inputs.length; i++) {
+            output = instance.runOnInput(inputs[i]).get(0);
+            newError += Math.abs(output - desiredOutputs[i].get(0));
+        }
+        System.out.println("\tAfter weak batch training of all possible inputs for " + iterations + " iterations, total error improved from " + error + " to " + newError);
+        System.out.println("\tOutputs after weak batch training: ");
+        for(int i = 0; i < inputs.length; i++) {
+            System.out.println("\t\tFor input: " + inputs[i].get(0) + ", " + inputs[i].get(1));
+            System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
+        }
+        System.out.println("biases now: " + instance.biases[0] + ", " + instance.biases[1]);
+        System.out.println("Weights: ");
+        instance.weights[0].print();
+        assertTrue(newError <= error);
+    }
+    
+    @Test
+    public void testTrainOnBatch() {
+        System.out.println("* testTrainOnBatch");
+        SimpleMatrix[] inputs = new SimpleMatrix[4];
+        inputs[0] = new SimpleMatrix(2, 1, true, 1, 1);
+        inputs[1] = new SimpleMatrix(2, 1, true, 0, 1);
+        inputs[2] = new SimpleMatrix(2, 1, true, 1, 0);
+        inputs[3] = new SimpleMatrix(2, 1, true, 0, 0);
+        SimpleMatrix[] desiredOutputs = new SimpleMatrix[4];
+        desiredOutputs[0] = new SimpleMatrix(1, 1, true, 1);
+        desiredOutputs[1] = new SimpleMatrix(1, 1, true, 0);
+        desiredOutputs[2] = new SimpleMatrix(1, 1, true, 0);
+        desiredOutputs[3] = new SimpleMatrix(1, 1, true, 0);
+        int[] layerSizes = {2, 1};
+        double[] biases = {0,0};
+        System.out.println("biases initialized to " + biases[0] + ", " + biases[1]);
+        SimpleMatrix[] weights = new SimpleMatrix[1];
+        weights[0] = new SimpleMatrix(1, 2, true, 0, 0);
+        ANN instance = new ANN(layerSizes, weights, biases);
+        double error = 0;
+        double output;
+        for(int i = 0; i < inputs.length; i++) {
+            output = instance.runOnInput(inputs[i]).get(0);
+            error += Math.abs(output - desiredOutputs[i].get(0));
+        }
+        System.out.println("\tOutputs before batch training: ");
+        for(int i = 0; i < inputs.length; i++) {
+            System.out.println("\t\tFor input: " + inputs[i].get(0) + ", " + inputs[i].get(1));
+            System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
+        }
+        double newError = 0; 
+        int iterations = 10000;
+        instance.trainOnBatch(inputs, desiredOutputs, iterations);
+        for(int i = 0; i < inputs.length; i++) {
+            output = instance.runOnInput(inputs[i]).get(0);
+            newError += Math.abs(output - desiredOutputs[i].get(0));
+        }
+        System.out.println("\tAfter batch training of all possible inputs for " + iterations + " iterations, total error improved from " + error + " to " + newError);
+        System.out.println("\tOutputs after batch training: ");
+        for(int i = 0; i < inputs.length; i++) {
+            System.out.println("\t\tFor input: " + inputs[i].get(0) + ", " + inputs[i].get(1));
+            System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
+        }
+        System.out.println("biases now: " + instance.biases[0] + ", " + instance.biases[1]);
+        System.out.println("Weights: ");
+        instance.weights[0].print();
+        assertTrue(newError <= error);
+    }
+    
+    @Test
+    public void testJavaArrayPassing() {
+        int[] a = {1, 2, 3};
+        modifyArray(a);
+        assertEquals(2, a[0]); //modifyArray gets a reference to a, so any change made to a in the method changes a in real life
+    }
+    
+    public void modifyArray(int[] a) {
+        a[0]++;
+    }
 }
