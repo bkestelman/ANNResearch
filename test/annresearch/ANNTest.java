@@ -185,6 +185,7 @@ public class ANNTest {
         SimpleMatrix[] weights = new SimpleMatrix[1];
         weights[0] = new SimpleMatrix(1, 2, true, 0, 0);
         ANN instance = new ANN(layerSizes, weights, biases);
+        instance.function = ANN.Function.NONE;
         double error = 0;
         double output;
         for(int i = 0; i < inputs.length; i++) {
@@ -197,7 +198,7 @@ public class ANNTest {
             System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
         }
         double newError = 0; 
-        int iterations = 10000;
+        int iterations = 1000;
         instance.trainOnBatchWeak(inputs, desiredOutputs, iterations);
         for(int i = 0; i < inputs.length; i++) {
             output = instance.runOnInput(inputs[i]).get(0);
@@ -234,6 +235,7 @@ public class ANNTest {
         SimpleMatrix[] weights = new SimpleMatrix[1];
         weights[0] = new SimpleMatrix(1, 2, true, 0, 0);
         ANN instance = new ANN(layerSizes, weights, biases);
+        instance.function = ANN.Function.NONE;
         double error = 0;
         double output;
         for(int i = 0; i < inputs.length; i++) {
@@ -246,7 +248,7 @@ public class ANNTest {
             System.out.println("\t\tOutput is: " + instance.runOnInput(inputs[i]).get(0));
         }
         double newError = 0; 
-        int iterations = 10000;
+        int iterations = 1000;
         instance.trainOnBatch(inputs, desiredOutputs, iterations);
         for(int i = 0; i < inputs.length; i++) {
             output = instance.runOnInput(inputs[i]).get(0);
